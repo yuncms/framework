@@ -1,0 +1,16 @@
+{
+  "name": "yuncms/sms",
+  "description": "The sms module for yuncms.",
+  "keywords": [
+    "yii",
+    "yii2-sms",
+    "filesystem"
+  ],
+  "type": "yii2-extension",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "yuncms\\sms\\": ""
+    }
+  }
+}

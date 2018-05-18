@@ -70,7 +70,7 @@ return [
                     'url' => '@web/storage/public',
                     'visibility' => 'public',
                 ],
-                
+
             ],
         ],
         'notification' => [
