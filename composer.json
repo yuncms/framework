@@ -29,6 +29,7 @@
     "jakeasmith/http_build_url": "~1.0",
     "creocoder/yii2-taggable": "~2.0",
     "nesbot/carbon": "~1.0",
+    "league/flysystem": "^1.0.8",
     "yiisoft/yii2": "~2.0.0",
     "yiisoft/yii2-swiftmailer": "~2.1.0",
     "yiisoft/yii2-queue": "~2.0.0",
