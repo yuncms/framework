@@ -57,20 +57,28 @@ return [
         ],
         'filesystem' => [
             'class' => yuncms\filesystem\FilesystemManager::class,
-            'default' => 'local',
-            'cloud' => 'oss',
+            'default' => 'public',//默认存储
+            'cloud' => 'cloud',
             'disks' => [
                 'local' => [//本地存储
                     'adapter' => 'local',
-                    'root' => '@root/storage/app'
+                    'root' => '@root'
                 ],
-                'public' => [
+                'attachment' => [
                     'adapter' => 'local',
-                    'root' => '@root/storage/public',
-                    'url' => '@web/storage/public',
-                    'visibility' => 'public',
+                    'root' => '@root/storage/uploads',
+                    'url' => '@web/storage/uploads',
+                    'visibility' => 'public',//文件默认可见性
                 ],
-
+                'avatar' => [
+                    'adapter' => 'local',
+                    'root' => '@root/storage/avatar',
+                    'url' => '@web/storage/avatar',
+                    'visibility' => 'public',//文件默认可见性
+                ],
+                'cloud' => [//默认云存储
+                    'adapter' => 'oss',
+                ],
             ],
         ],
         'notification' => [

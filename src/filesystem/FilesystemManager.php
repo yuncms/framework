@@ -49,7 +49,7 @@ class FilesystemManager extends Component
      *
      * @var string
      */
-    public $cloud = 'oss';
+    public $cloud = 'cloud';
 
     /**
      * 磁盘配置

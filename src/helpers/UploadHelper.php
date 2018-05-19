@@ -25,8 +25,7 @@ class UploadHelper
      */
     public static function getDisk()
     {
-
-        return Yii::$app->filesystem->disk(Yii::$app->settings->get('volume', 'attachment', 'public'));
+        return Yii::$app->filesystem->disk(Yii::$app->settings->get('volume', 'attachment', 'attachment'));
     }
 
     /**
