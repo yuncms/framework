@@ -91,7 +91,6 @@ class Attachment extends ActiveRecord
             'original_name' => Yii::t('yuncms', 'Original FileName'),
             'size' => Yii::t('yuncms', 'File Size'),
             'type' => Yii::t('yuncms', 'File Type'),
-            'volume' => Yii::t('yuncms', 'Volume'),
             'path' => Yii::t('yuncms', 'Path'),
             'ip' => Yii::t('yuncms', 'User Ip'),
             'created_at' => Yii::t('yuncms', 'Created At'),

@@ -29,7 +29,6 @@ class m180328_110823_create_attachment_table extends Migration
             'original_name' => $this->string(255)->notNull()->comment('Original Name'),
             'size' => $this->integer()->defaultValue(0)->comment('Size'),
             'type' => $this->string(255)->notNull()->comment('Type'),
-            'volume' => $this->string(50)->notNull()->comment('Volume'),
             'path' => $this->string(255)->comment('Path'),
             'ip' => $this->string(255)->notNull()->comment('Ip'),
             'created_at' => $this->integer()->unsigned()->notNull()->comment('Created At'),

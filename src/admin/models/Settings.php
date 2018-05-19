@@ -96,7 +96,7 @@ class Settings extends Model
             'close' => 'boolean',
             'closeReason' => 'string',
             'analysisCode' => 'string',
-            'icpbeian' => 'string',
+            'icpBeian' => 'string',
             'beian' => 'string',
         ];
     }
@@ -111,7 +111,10 @@ class Settings extends Model
             [['name', 'title', 'keywords', 'description', 'copyright', 'closeReason', 'analysisCode', 'icpBeian', 'beian'], 'string'],
             ['close', 'boolean'],
             ['close', 'default', 'value' => false],
-            ['baseUrl', 'url']
+            ['baseUrl', 'url'],
+
+
+            ['name','default','value' => 'YUNCMS'],
         ];
     }
 

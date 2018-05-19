@@ -78,7 +78,7 @@ class AttachmentSetting extends Model
     {
         return [
             [['volume', 'imageMaxSize', 'imageAllowFiles', 'videoMaxSize', 'videoAllowFiles', 'fileMaxSize', 'fileAllowFiles'], 'string'],
-            ['volume', 'default', 'value' => 'attachment'],
+            ['volume', 'default', 'value' => 'public'],
             ['imageMaxSize', 'default', 'value' => '2M'],
             ['imageAllowFiles', 'default', 'value' => 'png,jpg,jpeg,gif,bmp'],
             ['videoMaxSize', 'default', 'value' => '100M'],

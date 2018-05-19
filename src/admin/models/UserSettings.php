@@ -168,7 +168,7 @@ class UserSettings extends Model
 
             [['avatarVolume'], 'string'],
 
-            ['avatarVolume', 'default', 'value' => 'avatar'],
+            ['avatarVolume', 'default', 'value' => 'public'],
 
         ];
     }

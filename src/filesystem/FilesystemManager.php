@@ -49,7 +49,7 @@ class FilesystemManager extends Component
      *
      * @var string
      */
-    public $cloud = 'local';
+    public $cloud = 'oss';
 
     /**
      * 磁盘配置
@@ -62,11 +62,11 @@ class FilesystemManager extends Component
      */
     private $_disks = [];
 
-
     /**
      * 获取磁盘
      * @param string|null $disk
      * @return \yuncms\filesystem\Filesystem|\yuncms\filesystem\Cloud
+     * @throws \yii\base\InvalidConfigException
      */
     public function cloud($disk = null)
     {
@@ -78,6 +78,7 @@ class FilesystemManager extends Component
      * 获取磁盘
      * @param string|null $disk
      * @return \yuncms\filesystem\Filesystem|\yuncms\filesystem\Cloud
+     * @throws \yii\base\InvalidConfigException
      */
     public function disk($disk = null)
     {
@@ -90,6 +91,7 @@ class FilesystemManager extends Component
      *
      * @param  string $name
      * @return \yuncms\filesystem\Filesystem|\yuncms\filesystem\Cloud
+     * @throws \yii\base\InvalidConfigException
      */
     protected function get($name)
     {
@@ -112,22 +114,23 @@ class FilesystemManager extends Component
      * Resolve the given disk.
      *
      * @param  string $name
-     * @return \yuncms\filesystem\Filesystem
-     * @throws \InvalidArgumentException
+     * @return object|Filesystem
+     * @throws \yii\base\InvalidConfigException
      */
     protected function resolve($name)
     {
         $config = $this->disks[$name];
-
-//        if (isset($this->customCreators[$config['driver']])) {
-//            return $this->callCustomCreator($config);
-//        }
-
-        $driverMethod = 'create' . ucfirst($config['adapter']) . 'Adapter';
-        if (method_exists($this, $driverMethod)) {
-            return $this->{$driverMethod}($config);
+        if (isset($config['class'])) {
+            return Yii::createObject($config);
+        } else if (isset($config['adapter'])) {
+            $driverMethod = 'create' . ucfirst($config['adapter']) . 'Adapter';
+            if (method_exists($this, $driverMethod)) {
+                return $this->{$driverMethod}($config);
+            } else {
+                throw new InvalidArgumentException("Adapter [{$config['adapter']}] is not supported.");
+            }
         } else {
-            throw new InvalidArgumentException("Adapter [{$config['adapter']}] is not supported.");
+            throw new InvalidArgumentException("Wrong adapter configuration.");
         }
     }
 
@@ -291,6 +294,7 @@ class FilesystemManager extends Component
      * @param  string $method
      * @param  array $parameters
      * @return mixed
+     * @throws \yii\base\InvalidConfigException
      */
     public function __call($method, $parameters)
     {
