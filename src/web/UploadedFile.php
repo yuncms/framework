@@ -13,6 +13,7 @@ use yii\validators\UrlValidator;
 use yuncms\filesystem\FilesystemAdapter;
 use yuncms\helpers\FileHelper;
 use yuncms\helpers\StringHelper;
+use yuncms\helpers\UploadHelper;
 use yuncms\models\Attachment;
 use League\Flysystem\AdapterInterface;
 
@@ -158,10 +159,10 @@ class UploadedFile extends \yii\web\UploadedFile
     public function save()
     {
         $filePath = $this->getRename();
-        if (!self::getDisk()->exists($filePath)) {
+        if (!UploadHelper::getDisk()->exists($filePath)) {
             $type = $this->getMimeType();
             $fileContent = FileHelper::readAndDelete($this->tempName);
-            self::getDisk()->put($filePath, $fileContent, [
+            UploadHelper::getDisk()->put($filePath, $fileContent, [
                 'visibility' => AdapterInterface::VISIBILITY_PUBLIC
             ]);
             $model = new Attachment([
@@ -178,14 +179,7 @@ class UploadedFile extends \yii\web\UploadedFile
         return false;
     }
 
-    /**
-     * 获取存储卷
-     * @return \yuncms\filesystem\Cloud|\yuncms\filesystem\Filesystem|FilesystemAdapter
-     */
-    public static function getDisk()
-    {
-        return Yii::$app->filesystem->disk(Yii::$app->settings->get('volume', 'attachment', 'public'));
-    }
+
 
     /**
      * Saves the uploaded file to a temp location.

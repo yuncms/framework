@@ -11,11 +11,11 @@ use Yii;
 use yii\db\BaseActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\AttributeBehavior;
+use yuncms\helpers\UploadHelper;
 use yuncms\jobs\AttachmentDeleteJob;
 use yuncms\behaviors\IpBehavior;
 use yuncms\db\ActiveRecord;
 use yuncms\user\models\User;
-use yuncms\web\UploadedFile;
 
 /**
  * Class Attachment
@@ -119,10 +119,11 @@ class Attachment extends ActiveRecord
     /**
      * 获取访问Url
      * @return string
+     * @throws \yii\base\InvalidConfigException
      */
     public function getUrl()
     {
-        return UploadedFile::getDisk()->url($this->path);
+        return UploadHelper::getDisk()->url($this->path);
     }
 
     /**

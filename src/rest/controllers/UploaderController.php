@@ -27,14 +27,14 @@ class UploaderController extends Controller
      * @return UploaderImageForm
      * @throws ServerErrorHttpException
      * @throws \yii\base\InvalidConfigException
+     * @throws \Exception
      */
     public function actionImage()
     {
         $model = new UploaderImageForm();
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
         if ($model->save() != false) {
-            $response = Yii::$app->getResponse();
-            $response->setStatusCode(201);
+            Yii::$app->getResponse()->setStatusCode(201);
             return $model;
         } elseif (!$model->hasErrors()) {
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
@@ -47,14 +47,14 @@ class UploaderController extends Controller
      * @return UploaderAudioForm
      * @throws ServerErrorHttpException
      * @throws \yii\base\InvalidConfigException
+     * @throws \Exception
      */
     public function actionAudio()
     {
         $model = new UploaderAudioForm();
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
         if ($model->save() != false) {
-            $response = Yii::$app->getResponse();
-            $response->setStatusCode(201);
+            Yii::$app->getResponse()->setStatusCode(201);
             return $model;
         } elseif (!$model->hasErrors()) {
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
@@ -67,14 +67,14 @@ class UploaderController extends Controller
      * @return UploaderFileForm
      * @throws ServerErrorHttpException
      * @throws \yii\base\InvalidConfigException
+     * @throws \Exception
      */
     public function actionFile()
     {
         $model = new UploaderFileForm();
         $model->load(Yii::$app->getRequest()->getBodyParams(), '');
         if ($model->save() != false) {
-            $response = Yii::$app->getResponse();
-            $response->setStatusCode(201);
+            Yii::$app->getResponse()->setStatusCode(201);
             return $model;
         } elseif (!$model->hasErrors()) {
             throw new ServerErrorHttpException('Failed to create the object for unknown reason.');

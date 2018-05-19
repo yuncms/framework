@@ -8,6 +8,7 @@
 namespace yuncms\helpers;
 
 use Yii;
+use yuncms\filesystem\FilesystemAdapter;
 
 /**
  * 文件上传助手
@@ -17,6 +18,17 @@ use Yii;
  */
 class UploadHelper
 {
+    /**
+     * 获取存储卷
+     * @return \yuncms\filesystem\Cloud|\yuncms\filesystem\Filesystem|FilesystemAdapter
+     * @throws \yii\base\InvalidConfigException
+     */
+    public static function getDisk()
+    {
+
+        return Yii::$app->filesystem->disk(Yii::$app->settings->get('volume', 'attachment', 'public'));
+    }
+
     /**
      * 返回允许上传的最大大小单位 Byte
      * @param string $maxSize 最大上传大小MB
