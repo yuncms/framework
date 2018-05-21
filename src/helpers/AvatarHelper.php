@@ -113,7 +113,7 @@ class AvatarHelper
         $size = in_array($size, [self::AVATAR_BIG, self::AVATAR_MIDDLE, self::AVATAR_SMALL]) ? $size : self::AVATAR_BIG;
         if ($user->getIsAvatar()) {
             $avatarPath = AvatarHelper::getAvatarPath($user->id) . "_avatar_{$size}.jpg";
-            return static::getDisk()->url($avatarPath) . '?_t=' . $user->updated_at;
+            return static::getDisk()->url($avatarPath) . '?_t=' . time();
         } else {
             $avatarUrl = "/img/no_avatar_{$size}.gif";
             if (Yii::getAlias('@webroot', false)) {
