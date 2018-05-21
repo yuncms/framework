@@ -288,7 +288,7 @@ class PersonController extends Controller
      */
     public function actionIdentification()
     {
-        if (!class_exists('yuncms\identification\rest\models\Authentication')) {
+        if (!class_exists('yuncms\identification\rest\models\Identification')) {
             throw new InvalidConfigException('No identification module installed.');
         } else {
             if (Yii::$app->request->isPost) {
