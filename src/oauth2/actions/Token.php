@@ -18,6 +18,7 @@ use yuncms\oauth2\grant\types\Authorization;
 use yuncms\oauth2\grant\types\UserCredentials;
 use yuncms\oauth2\grant\types\ClientCredentials;
 use yuncms\oauth2\grant\types\WeChatCredentials;
+use yuncms\oauth2\grant\types\WeChatMiniCredentials;
 
 /**
  * 获取 OAth2 令牌 action
@@ -48,6 +49,7 @@ class Token extends Action
         'client_credentials' => ClientCredentials::class,//个人账户密码
         'password' => UserCredentials::class,//账户密码
         'wechat' => WeChatCredentials::class,//微信
+        'wechat_mini' => WeChatMiniCredentials::class,//微信
         'qrcode' => QRCode::class,//客户端扫码
 //        'urn:ietf:params:oauth:grant-type:jwt-bearer' => 'yuncms\oauth2\grant\types\JwtBearer',//JWT 客户端签名
     ];
