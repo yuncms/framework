@@ -98,7 +98,7 @@ class WeChatMiniCredentials extends GrantType
     {
         return [
             [['grant_type', 'client_id', 'code'], 'required'],
-            ['grant_type', 'required', 'requiredValue' => 'wechat'],
+            ['grant_type', 'required', 'requiredValue' => 'wechat_mini'],
             [['client_id'], 'string', 'max' => 80],
             [['client_id'], 'validateClientId'],
             [['client_secret'], 'validateClientSecret'],
