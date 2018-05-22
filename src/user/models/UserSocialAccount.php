@@ -34,7 +34,7 @@ use yuncms\helpers\Json;
  * @property-read array $decodedData 开放平台响应数组
  * @property-read bool isAuthor 是否是作者
  * @property-read boolean $isDraft 是否草稿
- * @property-read boolean $isPublished 是否发布
+ * @property bool $isConnected 是否已经连接
  */
 class UserSocialAccount extends ActiveRecord
 {

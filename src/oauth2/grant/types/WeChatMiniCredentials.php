@@ -146,6 +146,7 @@ class WeChatMiniCredentials extends GrantType
      * @throws ServerErrorHttpException
      * @throws \yii\web\HttpException
      * @throws InvalidConfigException
+     * @throws \yii\authclient\InvalidResponseException
      */
     protected function getUser()
     {
