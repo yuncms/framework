@@ -72,7 +72,7 @@ class UserBindMobileForm extends Model
     public function bind()
     {
         if ($this->validate() && ($user = $this->getUser()) != null) {
-            $user->updateAttributes(['mobile' => $this->mobile]);
+            $user->updateAttributes(['mobile' => $this->mobile, 'mobile_confirmed_at' => time()]);
             return $user;
         }
         return false;

@@ -99,16 +99,16 @@ class CaptchaAction extends Action
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         if (Yii::$app->request->isPost && ($mobile = Yii::$app->request->post('mobile')) != null) {
-            //两次获取间隔小于60
-            if (time() - $this->cache->get($this->sessionKey . 'time') < $this->waitTime) {
-                $code = $this->getVerifyCode(false);
-                return [
-                    'hash' => $this->generateValidationHash($code),
-                    'url' => Url::to([$this->id, 'v' => uniqid()]),
-                    'waitTime' => $this->waitTime,
-                    'mobile' => $mobile,
-                ];
-            } else {
+//            //两次获取间隔小于60
+//            if (time() - $this->cache->get($this->sessionKey . 'time') < $this->waitTime) {
+//                $code = $this->getVerifyCode(false);
+//                return [
+//                    'hash' => $this->generateValidationHash($code),
+//                    'url' => Url::to([$this->id, 'v' => uniqid()]),
+//                    'waitTime' => $this->waitTime,
+//                    'mobile' => $mobile,
+//                ];
+//            } else {
                 if ($mobileCount = $this->cache->get($this->sessionKey . $mobile) > 9) {
                     throw new TooManyRequestsHttpException('Too Many Requests.');
                 }
@@ -126,7 +126,7 @@ class CaptchaAction extends Action
                     'waitTime' => $this->waitTime,
                     'mobile' => $mobile,
                 ];
-            }
+            //}
         }
         throw new MethodNotAllowedHttpException();
     }
