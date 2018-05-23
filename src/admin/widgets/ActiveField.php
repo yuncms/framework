@@ -68,6 +68,20 @@ class ActiveField extends \yii\bootstrap\ActiveField
     }
 
     /**
+     * @param array $options
+     * @param bool $generateDefault
+     * @return \yii\bootstrap\ActiveField|ActiveField
+     */
+    public function dropDownListBool($options = [], $generateDefault = true)
+    {
+        $items = [
+            '0' => Yii::t('yii', 'Yes'),
+            '1' => Yii::t('yii', 'No')
+        ];
+        return $this->dropDownList($items, $options, $generateDefault);
+    }
+
+    /**
      * 显示下拉
      * @param array $items
      * @param array $options
