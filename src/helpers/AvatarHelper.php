@@ -83,6 +83,7 @@ class AvatarHelper
             }
         }
         $user->updateAttributes(['avatar' => true]);
+        $user->touch('updated_at');
         return true;
     }
 
@@ -91,6 +92,7 @@ class AvatarHelper
      * @param int $userId
      * @param string $size
      * @return string
+     * @throws \OSS\Core\OssException
      * @throws \yii\base\InvalidConfigException
      */
     public static function getAvatarById($userId, $size = self::AVATAR_MIDDLE)
@@ -107,13 +109,15 @@ class AvatarHelper
      * @param User $user
      * @param string $size
      * @return string
+     * @throws \OSS\Core\OssException
+     * @throws \yii\base\InvalidConfigException
      */
     public static function getAvatar(User $user, $size = self::AVATAR_MIDDLE)
     {
         $size = in_array($size, [self::AVATAR_BIG, self::AVATAR_MIDDLE, self::AVATAR_SMALL]) ? $size : self::AVATAR_BIG;
         if ($user->getIsAvatar()) {
             $avatarPath = AvatarHelper::getAvatarPath($user->id) . "_avatar_{$size}.jpg";
-            return static::getDisk()->url($avatarPath) . '?_t=' . time();
+            return static::getDisk()->url($avatarPath) . '?_t=' . $user->updated_at;
         } else {
             $avatarUrl = "/img/no_avatar_{$size}.gif";
             if (Yii::getAlias('@webroot', false)) {
@@ -142,6 +146,7 @@ class AvatarHelper
     /**
      * 获取头像存储卷
      * @return \yuncms\filesystem\Cloud|\yuncms\filesystem\Filesystem|FilesystemAdapter
+     * @throws \yii\base\InvalidConfigException
      */
     public static function getDisk()
     {
