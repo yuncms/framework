@@ -22,10 +22,10 @@ $items = [
         'icon' => 'glyphicon glyphicon-picture'
     ],
     [
-        'label' => Yii::t('yuncms', 'Authentication'),
-        'url' => ['/authentication/authentication/index'],
+        'label' => Yii::t('yuncms/identification', 'Identification'),
+        'url' => ['/identification/identification/index'],
         'icon' => 'glyphicon glyphicon-education',
-        'visible' => Yii::$app->hasModule('authentication')
+        'visible' => Yii::$app->hasModule('identification')
     ],
     [
         'label' => Yii::t('yuncms', 'My Funds'),
