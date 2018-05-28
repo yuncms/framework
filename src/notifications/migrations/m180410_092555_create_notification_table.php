@@ -30,6 +30,11 @@ class m180410_092555_create_notification_table extends Migration
             'notifiable_id' => $this->unsignedInteger()->notNull()->comment('Entity'),//通知实体ID
             'notifiable_class' => $this->string()->notNull()->comment('Entity'),//通知实体类名
             'data' => $this->text(),//通知数据
+
+            // data_entity
+            // data_source
+            // data_target
+            //
             'read_at' => $this->unixTimestamp()->comment('Read At'),//阅读时间
             'created_at' => $this->unixTimestamp()->notNull()->comment('Created At'),//创建时间
             'updated_at' => $this->integer(10)->unsigned()->notNull()->comment('Updated At'),//更新时间
