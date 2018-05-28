@@ -54,6 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     'id',
                     'username',
+                    'nickname',
                     'email:email',
                     'mobile',
 //                    [
