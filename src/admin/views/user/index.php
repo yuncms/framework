@@ -57,22 +57,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     'nickname',
                     'email:email',
                     'mobile',
-//                    [
-//                        'header' => Yii::t('yuncms', 'Authentication'),
-//                        'value' => function ($model) {
-//                            if (\yuncms\authentication\models\Authentication::isAuthentication($model->id)) {
-//                                if ($model->authentication->status == \yuncms\authentication\models\Authentication::STATUS_PENDING) {
-//                                    return Yii::t('yuncms', 'Pending review');
-//                                } elseif ($model->authentication->status == \yuncms\authentication\models\Authentication::STATUS_REJECTED) {
-//                                    return Yii::t('yuncms', 'Rejected');
-//                                } elseif ($model->authentication->status == \yuncms\authentication\models\Authentication::STATUS_AUTHENTICATED) {
-//                                    return Yii::t('yuncms', 'Authenticated');
-//                                }
-//                            }
-//                            return Yii::t('yuncms', 'UnSubmitted');
-//                        },
-//                        'format' => 'raw',
-//                    ],
+                    [
+                        'header' => Yii::t('yuncms', 'Identification'),
+                        'value' => function ($model) {
+                            if ($model->identified) {
+                                return Yii::t('yuncms', 'Identified');
+                            } else {
+                                return Yii::t('yuncms', 'Not identified');
+                            }
+                        },
+                        'format' => 'raw',
+                    ],
                     [
                         'attribute' => 'registration_ip',
                         'value' => function ($model) {
