@@ -31,9 +31,9 @@ class m180410_092555_create_notification_table extends Migration
             'notifiable_class' => $this->string()->notNull()->comment('Entity'),//通知实体类名
             'data' => $this->text(),//通知数据
 
-            // data_entity
-            // data_source
-            // data_target
+            // data_entity 触发通知的那个实体
+            // data_source 源实体
+            // data_target 目标实体
             //
             'read_at' => $this->unixTimestamp()->comment('Read At'),//阅读时间
             'created_at' => $this->unixTimestamp()->notNull()->comment('Created At'),//创建时间
