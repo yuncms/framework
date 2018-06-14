@@ -473,7 +473,7 @@ class BaseUser extends ActiveRecord implements IdentityInterface, RateLimitInter
      */
     public function viaChannels()
     {
-        return ['database', 'mail', 'sms', 'push', 'wechat', 'alipay', 'dingtalk'];
+        return ['database', 'mail', 'sms', 'cloudPush', 'wechat', 'alipay', 'dingtalk'];
     }
 
     /**
