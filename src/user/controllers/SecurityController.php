@@ -44,7 +44,7 @@ class SecurityController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['login', 'auth', 'logout'],
+                        'actions' => ['login', 'wechat-auth','auth', 'logout'],
                         'roles' => ['@']
                     ]
                 ]
