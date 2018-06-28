@@ -69,7 +69,7 @@ class AvatarHelper
         $avatarPath = AvatarHelper::getAvatarPath($user->id);
         foreach (self::$avatarSize as $size => $value) {
             try {
-                $tempFile = Yii::$app->getPath()->getTempPath() . DIRECTORY_SEPARATOR . $user->id . '_avatar_' . $size . '.jpg';
+                $tempFile = Yii::getAlias('@runtime') . DIRECTORY_SEPARATOR . $user->id . '_avatar_' . $size . '.jpg';
                 Image::thumbnail($originalImage, $value, $value)->save($tempFile, ['quality' => 100]);
                 $currentAvatarPath = $avatarPath . "_avatar_{$size}.jpg";
                 if (self::getDisk()->exists($currentAvatarPath)) {
