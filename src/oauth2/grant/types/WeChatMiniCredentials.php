@@ -182,13 +182,14 @@ class WeChatMiniCredentials extends GrantType
 
                 if ($user->createUser()) {
                     $account->connect($user);
-                    //新注册的用户 此处开始下载微信头像保存到本地
-                    Yii::$app->queue->push(new SocialAvatarDownloadJob(['user_id' => $user->id, 'faceUrl' => $client->getUserAttributes()['headimgurl']]));
                 }
                 if ($user->hasErrors()) {
                     throw new ServerErrorHttpException('Failed to login the user for unknown reason.');
                 }
                 $this->_user = $user;
+            }
+            if(!$this->_user->isAvatar){
+                Yii::$app->queue->push(new SocialAvatarDownloadJob(['user_id' => $this->_user->id, 'faceUrl' => $client->getUserAttributes()['headimgurl']]));
             }
         }
         return $this->_user;
