@@ -189,7 +189,7 @@ class WeChatCredentials extends GrantType
             }
 
             if(!$this->_user->isAvatar){
-                Yii::$app->queue->push(new SocialAvatarDownloadJob(['user_id' => $user->id, 'faceUrl' => $client->getUserAttributes()['headimgurl']]));
+                Yii::$app->queue->push(new SocialAvatarDownloadJob(['user_id' => $this->_user->id, 'faceUrl' => $client->getUserAttributes()['headimgurl']]));
             }
         }
         return $this->_user;
