@@ -7,6 +7,7 @@
 
 namespace yuncms\jobs;
 
+use Yii;
 use yii\base\BaseObject;
 use yii\queue\RetryableJobInterface;
 use yuncms\helpers\AvatarHelper;
@@ -43,7 +44,7 @@ class SocialAvatarDownloadJob extends BaseObject implements RetryableJobInterfac
     public function execute($queue)
     {
         if (($user = $this->getUser()) != null) {
-            $originalImage = AvatarHelper::getAvatarPath($user->id) . '_avatar.jpg';
+            $originalImage = Yii::getAlias('@runtime/') . $user->id . '_avatar.jpg';
             //下载图片
             if (($image = @file_get_contents($this->faceUrl)) != false) {
                 //保存原图
