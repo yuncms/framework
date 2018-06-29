@@ -166,29 +166,37 @@ class WeChatCredentials extends GrantType
             if ($account->user instanceof User) {
                 $this->_user = $account->user;
             } else {
-                /** @var \yuncms\user\models\User $user */
-                $user = Yii::createObject([
-                    'class' => User::class,
-                    'scenario' => User::SCENARIO_CONNECT,
-                    'nickname' => $account->username,
-                ]);
+                if (($wechat = UserSocialAccount::find()->byProvider('wechat')->andWhere(['client_id' => $client->getUserAttributes()['id']])->one()) != null) {//网页扫码绑定
+                    $account->connect($wechat->user);
+                } else if (($wechat = UserSocialAccount::find()->byProvider('wechat_mini')->andWhere(['client_id' => $client->getUserAttributes()['id']])->one()) != null) {//小程序绑定
+                    $account->connect($wechat->user);
+                } else if (($wechat = UserSocialAccount::find()->byProvider('wechat_pub')->andWhere(['client_id' => $client->getUserAttributes()['id']])->one()) != null) {//公众号绑定
+                    $account->connect($wechat->user);
+                } else {
+                    /** @var \yuncms\user\models\User $user */
+                    $user = Yii::createObject([
+                        'class' => User::class,
+                        'scenario' => User::SCENARIO_CONNECT,
+                        'nickname' => $account->username,
+                    ]);
 
-                // generate nickname like "user1", "user2", etc...
-                while (!$user->validate(['nickname'])) {
-                    $row = (new Query())->from('{{%user}}')->select('MAX(id) as id')->one();
-                    $user->nickname = Inflector::slug($account->username, '') . ++$row['id'];
-                }
+                    // generate nickname like "user1", "user2", etc...
+                    while (!$user->validate(['nickname'])) {
+                        $row = (new Query())->from('{{%user}}')->select('MAX(id) as id')->one();
+                        $user->nickname = Inflector::slug($account->username, '') . ++$row['id'];
+                    }
 
-                if ($user->createUser()) {
-                    $account->connect($user);
+                    if ($user->createUser()) {
+                        $account->connect($user);
+                    }
+                    if ($user->hasErrors()) {
+                        throw new ServerErrorHttpException('Failed to login the user for unknown reason.');
+                    }
+                    $this->_user = $user;
                 }
-                if ($user->hasErrors()) {
-                    throw new ServerErrorHttpException('Failed to login the user for unknown reason.');
-                }
-                $this->_user = $user;
             }
 
-            if(!$this->_user->isAvatar){
+            if (!$this->_user->isAvatar) {
                 Yii::$app->queue->push(new SocialAvatarDownloadJob(['user_id' => $this->_user->id, 'faceUrl' => $client->getUserAttributes()['headimgurl']]));
             }
         }
