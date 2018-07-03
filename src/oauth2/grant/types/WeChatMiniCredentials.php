@@ -193,8 +193,8 @@ class WeChatMiniCredentials extends GrantType
                     if ($user->hasErrors()) {
                         throw new ServerErrorHttpException('Failed to login the user for unknown reason.');
                     }
+                    $this->_user = $user;
                 }
-                $this->_user = $user;
             }
             if (!$this->_user->isAvatar) {
                 Yii::$app->queue->push(new SocialAvatarDownloadJob(['user_id' => $this->_user->id, 'faceUrl' => $client->getUserAttributes()['headimgurl']]));
