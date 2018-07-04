@@ -161,19 +161,21 @@ class WeChatMiniCredentials extends GrantType
             }
 
             $account = UserSocialAccount::find()->byClient($client)->one();
+
+            $userAttributes = $client->getUserAttributes();
             if ($account === null) {
                 $account = UserSocialAccount::createClient($client);
             }
             if ($account->user instanceof User) {
                 $this->_user = $account->user;
             } else {
-//                if (($wechat = UserSocialAccount::find()->byProvider('wechat')->andWhere(['client_id' => $client->getUserAttributes()['id']])->one()) != null) {//如果已经绑定了微信了
-//                    $account->connect($wechat->user);
-//                } else if (($wechat = UserSocialAccount::find()->byProvider('wechat_pub')->andWhere(['client_id' => $client->getUserAttributes()['id']])->one()) != null) {//绑定了公众号了
-//                    $account->connect($wechat->user);
-//                } else if (($wechat = UserSocialAccount::find()->byProvider('wechat_open')->andWhere(['client_id' => $client->getUserAttributes()['id']])->one()) != null) {//绑定了公众号了
-//                    $account->connect($wechat->user);
-//                } else {
+                if (($wechat = UserSocialAccount::find()->byProvider('wechat')->andWhere(['client_id' => $userAttributes['id']])->one()) != null) {//网页扫码绑定
+                    $account->connect($wechat->user);
+                } else if (($wechat = UserSocialAccount::find()->byProvider('wechat_pub')->andWhere(['client_id' => $userAttributes['id']])->one()) != null) {//公众号绑定
+                    $account->connect($wechat->user);
+                } else if (($wechat = UserSocialAccount::find()->byProvider('wechat_mobile')->andWhere(['client_id' => $userAttributes['id']])->one()) != null) {//手机
+                    $account->connect($wechat->user);
+                } else {
                     /** @var \yuncms\user\models\User $user */
                     $user = Yii::createObject([
                         'class' => User::class,
@@ -194,10 +196,10 @@ class WeChatMiniCredentials extends GrantType
                         throw new ServerErrorHttpException('Failed to login the user for unknown reason.');
                     }
                     $this->_user = $user;
-                //}
+                }
             }
-            if (!$this->_user->isAvatar) {
-                Yii::$app->queue->push(new SocialAvatarDownloadJob(['user_id' => $this->_user->id, 'faceUrl' => $client->getUserAttributes()['headimgurl']]));
+            if (!$this->_user->isAvatar && isset($userAttributes['headimgurl'])) {
+                Yii::$app->queue->push(new SocialAvatarDownloadJob(['user_id' => $this->_user->id, 'faceUrl' => $userAttributes['headimgurl']]));
             }
         }
         return $this->_user;
