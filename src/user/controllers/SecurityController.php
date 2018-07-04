@@ -44,7 +44,7 @@ class SecurityController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['login', 'wechat-auth','auth', 'logout'],
+                        'actions' => ['login', 'wechat-auth', 'auth', 'logout'],
                         'roles' => ['@']
                     ]
                 ]
@@ -127,14 +127,25 @@ class SecurityController extends Controller
         if ($account === null) {
             $account = UserSocialAccount::createClient($client);
         }
+        $userAttributes = $client->getUserAttributes();
         if ($account->user instanceof User) {
             if ($account->user->isBlocked) {
                 Yii::$app->session->setFlash('danger', Yii::t('yuncms', 'Your account has been blocked.'));
                 $this->action->successUrl = Url::to(['/user/security/login']);
             } else {
-                Yii::$app->user->login($account->user, Yii::$app->settings->get('rememberFor','user'));
+                Yii::$app->user->login($account->user, Yii::$app->settings->get('rememberFor', 'user'));
                 $this->action->successUrl = Yii::$app->getUser()->getReturnUrl();
             }
+        } else if (in_array($client->getName(), ['wechat', 'wechat_mini', 'wechat_mobile','wechat_pub'])) {
+            if (($wechat = UserSocialAccount::find()->byProvider('wechat')->andWhere(['client_id' => $userAttributes['id']])->one()) != null) {//网页扫码绑定
+                $account->connect($wechat->user);
+            } else if (($wechat = UserSocialAccount::find()->byProvider('wechat_mini')->andWhere(['client_id' => $userAttributes['id']])->one()) != null) {//小程序绑定
+                $account->connect($wechat->user);
+            } else if (($wechat = UserSocialAccount::find()->byProvider('wechat_mobile')->andWhere(['client_id' => $userAttributes['id']])->one()) != null) {//公众号绑定
+                $account->connect($wechat->user);
+            }
+            Yii::$app->user->login($account->user, Yii::$app->settings->get('rememberFor', 'user'));
+            $this->action->successUrl = Yii::$app->getUser()->getReturnUrl();
         } else {
             $this->action->successUrl = $account->getConnectUrl();
         }
