@@ -128,6 +128,7 @@ class SecurityController extends Controller
             $account = UserSocialAccount::createClient($client);
         }
         $userAttributes = $client->getUserAttributes();
+        $account->updateAttributes(['data' => json_encode($userAttributes)]);
         if ($account->user instanceof User) {
             if ($account->user->isBlocked) {
                 Yii::$app->session->setFlash('danger', Yii::t('yuncms', 'Your account has been blocked.'));

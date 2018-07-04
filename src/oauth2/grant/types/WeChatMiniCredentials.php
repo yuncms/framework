@@ -166,6 +166,7 @@ class WeChatMiniCredentials extends GrantType
             if ($account === null) {
                 $account = UserSocialAccount::createClient($client);
             }
+            $account->updateAttributes(['data' => json_encode($userAttributes)]);
             if ($account->user instanceof User) {
                 $this->_user = $account->user;
             } else {
