@@ -114,6 +114,20 @@ class NotificationController extends Controller
     }
 
     /**
+     * 标记指定通知为已读
+     */
+    public function actionBatchMarkRead()
+    {
+        if (($ids = Yii::$app->request->post('ids', null)) != null) {
+            foreach ($ids as $id) {
+                DatabaseNotification::updateAll(['read_at' => time()], ['id' => $id, 'notifiable_id' => Yii::$app->user->id, 'notifiable_class' => \yuncms\user\models\User::class]);
+            }
+
+        }
+        Yii::$app->getResponse()->setStatusCode(200);
+    }
+
+    /**
      * 标记所有通知为已读
      */
     public function actionMarkRead()
