@@ -56,6 +56,7 @@ $config = [
                     'except' => ['delete', 'create', 'update'],
                     'extraPatterns' => [
                         'POST mark-read' => 'mark-read',
+                        'POST batch-mark-read' => 'batch-mark-read',
                     ],
                 ],
             ],
