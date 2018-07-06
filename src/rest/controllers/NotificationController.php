@@ -49,6 +49,7 @@ class NotificationController extends Controller
             'index' => ['GET', 'HEAD'],
             'view' => ['GET', 'HEAD'],
             'mark-read' => ['POST'],
+            'batch-mark-read' => ['POST'],
         ]);
     }
 
