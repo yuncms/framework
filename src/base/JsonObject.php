@@ -39,17 +39,20 @@ class JsonObject implements \ArrayAccess, Arrayable
     {
         return $this->value ? Json::encode($this->value) : '';
     }
+
     /**
      * @param string|array $value
+     * @throws InvalidArgumentException
      */
     public function set($value)
     {
         if ($value === null || $value === '') {
             $value = [];
         } elseif (is_string($value)) {
-            $value = Json::decode($value, true);
-            if (!is_array($value)) {
-                throw new InvalidArgumentException('Value is scalar');
+            try {
+                $value = Json::decode($value, true);
+            } catch (InvalidArgumentException $e) {
+                throw new InvalidArgumentException($e->getMessage());
             }
         }
         if (!is_array($value)) {
@@ -58,6 +61,7 @@ class JsonObject implements \ArrayAccess, Arrayable
             $this->value = $value;
         }
     }
+
     /**
      * @inheritdoc
      */
@@ -66,6 +70,7 @@ class JsonObject implements \ArrayAccess, Arrayable
         $fields = array_keys($this->value);
         return array_combine($fields, $fields);
     }
+
     /**
      * @inheritdoc
      */
@@ -73,6 +78,7 @@ class JsonObject implements \ArrayAccess, Arrayable
     {
         return [];
     }
+
     /**
      * @inheritdoc
      */
@@ -80,6 +86,7 @@ class JsonObject implements \ArrayAccess, Arrayable
     {
         return empty($fields) ? $this->value : array_intersect_key($this->value, array_flip($fields));
     }
+
     /**
      * @return bool
      */
@@ -87,6 +94,7 @@ class JsonObject implements \ArrayAccess, Arrayable
     {
         return !$this->value;
     }
+
     /**
      * @inheritdoc
      */
@@ -94,6 +102,7 @@ class JsonObject implements \ArrayAccess, Arrayable
     {
         return isset($this->value[$offset]);
     }
+
     /**
      * @inheritdoc
      */
@@ -106,6 +115,7 @@ class JsonObject implements \ArrayAccess, Arrayable
             return $null;
         }
     }
+
     /**
      * @inheritdoc
      */
@@ -117,6 +127,7 @@ class JsonObject implements \ArrayAccess, Arrayable
             $this->value[$offset] = $value;
         }
     }
+
     /**
      * @inheritdoc
      */
