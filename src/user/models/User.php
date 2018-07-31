@@ -8,6 +8,7 @@
 namespace yuncms\user\models;
 
 use OSS\Core\OssException;
+use XuTL\QCloud\Tim\Account;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
@@ -440,6 +441,15 @@ class User extends BaseUser
         }
         $this->trigger(self::AFTER_CREATE);
         return true;
+    }
+
+    /**
+     * 获取IM实例
+     * @return Account
+     */
+    public function getIm()
+    {
+        return Yii::$app->im->getAccount($this->id);
     }
 
     /**

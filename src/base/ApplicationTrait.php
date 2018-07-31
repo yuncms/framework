@@ -27,6 +27,7 @@ use yuncms\sms\Sms;
  * @property \yuncms\sms\Sms $sms the sms connection.
  * @property \yii\web\UrlManager $frontUrlManager the frontUrlManager component.
  * @property \yuncms\services\Path $path the path component.
+ * @property \xutl\tim\Tim $im the im component.
  */
 trait ApplicationTrait
 {
