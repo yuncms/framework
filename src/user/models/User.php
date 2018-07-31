@@ -477,36 +477,9 @@ class User extends BaseUser
             $this->_extra->link('user', $this);
 
             if (isset(Yii::$app->params['user.tim']) && Yii::$app->params['user.tim']) {
-                Yii::$app->im->account->import(strval($this->id), $this->nickname);
+                Yii::$app->im->accountImport($this->id, $this->nickname, $this->faceUrl);
             }
         }
-        try {
-            $this->TimSync();
-        } catch (OssException $e) {
-            Yii::error($e->getMessage(),__METHOD__);
-        } catch (InvalidConfigException $e) {
-            Yii::error($e->getMessage(),__METHOD__);
-        }
-    }
 
-    /**
-     * @throws \OSS\Core\OssException
-     * @throws \yii\base\InvalidConfigException
-     */
-    public function TimSync()
-    {
-        Yii::$app->im->account->profileSet([
-            'From_Account' => strval($this->id),
-            'ProfileItem' => [
-                [
-                    'Tag' => 'Tag_Profile_IM_Nick',
-                    'Value' => $this->nickname
-                ],
-                [
-                    'Tag' => 'Tag_Profile_IM_Image',
-                    'Value' => AvatarHelper::getAvatar($this)
-                ],
-            ],
-        ]);
     }
 }
