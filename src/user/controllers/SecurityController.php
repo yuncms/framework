@@ -136,12 +136,12 @@ class SecurityController extends Controller
                 $this->action->successUrl = Url::to(['/user/security/login']);
             } else {
 
-                if (Yii::$app->hasModule('balance') && (UserSettleAccount::findOne(['user_id' => $account->user->id, 'channel' => 'wechat_pub']) == null && $client->getName() == 'wechat_pub')) {
-                    //保存清分账户
-                    $settleAccount = new UserSettleAccount(['channel' => 'wechat_pub']);
-                    $settleAccount->recipient = $userAttributes;
-                    $settleAccount->save();
-                }
+                //if (Yii::$app->hasModule('balance') && (UserSettleAccount::findOne(['user_id' => $account->user->id, 'channel' => 'wechat_pub']) == null && $client->getName() == 'wechat_pub')) {
+                //    //保存清分账户
+                //    $settleAccount = new UserSettleAccount(['channel' => 'wechat_pub']);
+                //    $settleAccount->recipient = $userAttributes;
+                //    $settleAccount->save();
+                //}
 
                 Yii::$app->user->login($account->user, Yii::$app->settings->get('rememberFor', 'user'));
                 $this->action->successUrl = Yii::$app->getUser()->getReturnUrl();
