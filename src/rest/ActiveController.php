@@ -9,13 +9,12 @@ namespace yuncms\rest;
 
 use Yii;
 use yii\data\ActiveDataProvider;
-use yii\rest\IndexAction;
-use yii\rest\Serializer;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBasicAuth;
-use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\HttpHeaderAuth;
 use yii\filters\auth\QueryParamAuth;
+use yii\rest\IndexAction;
+use yii\rest\Serializer;
 use yii\web\ForbiddenHttpException;
 use yuncms\filters\auth\OAuth2TokenAuth;
 
@@ -57,22 +56,20 @@ class ActiveController extends \yii\rest\ActiveController
             'class' => CompositeAuth::class,
             'authMethods' => $this->authMethods,
         ];
-        $behaviors['cors'] = [
-            'corsFilter' => [
-                'class' => \yii\filters\Cors::className(),
-                'cors' => [
-                    // restrict access to
-                    'Origin' => ['*'],
-                    'Access-Control-Request-Method' => ['POST', 'PUT', 'GET'],
-                    // Allow only POST and PUT methods
-                    'Access-Control-Request-Headers' => ['*'],
-                    // Allow only headers 'X-Wsse'
-                    'Access-Control-Allow-Credentials' => true,
-                    // Allow OPTIONS caching
-                    'Access-Control-Max-Age' => 3600,
-                    // Allow the X-Pagination-Current-Page header to be exposed to the browser.
-                    'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
-                ],
+        $behaviors['corsFilter'] = [
+            'class' => \yii\filters\Cors::class,
+            'cors' => [
+                // restrict access to
+                'Origin' => ['*'],
+                'Access-Control-Request-Method' => ['POST', 'PUT', 'GET'],
+                // Allow only POST and PUT methods
+                'Access-Control-Request-Headers' => ['*'],
+                // Allow only headers 'X-Wsse'
+                'Access-Control-Allow-Credentials' => true,
+                // Allow OPTIONS caching
+                'Access-Control-Max-Age' => 3600,
+                // Allow the X-Pagination-Current-Page header to be exposed to the browser.
+                'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
             ],
         ];
         return $behaviors;
