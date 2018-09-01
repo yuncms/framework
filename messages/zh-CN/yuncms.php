@@ -22,6 +22,7 @@ return [
     'Auth Key' => '',
     'Client Id' => '',
     'Code' => '',
+    'There is user with this mobile.'=>'该手机号码已经被使用了。',
     'Create Volume' => '添加卷',
     'Current' => '',
     'Identification' => '实名认证',

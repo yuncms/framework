@@ -40,7 +40,7 @@ class UserBindMobileForm extends Model
             'mobileTrim' => ['mobile', 'filter', 'filter' => 'trim'],
             'mobileRequired' => ['mobile', 'required'],
             'mobilePattern' => ['mobile', MobileValidator::class],
-            'mobileUnique' => ['mobile', 'unique', 'targetClass' => User::class, 'message' => Yii::t('yuncms', 'There is no user with this mobile')],
+            'mobileUnique' => ['mobile', 'unique', 'targetClass' => User::class, 'message' => Yii::t('yuncms', 'There is user with this mobile.')],
 
             // verifyCode needs to be entered correctly
             'verifyCodeRequired' => ['verifyCode', 'required'],
